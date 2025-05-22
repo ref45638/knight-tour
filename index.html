@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>6x6 騎士巡遊遊戲</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1 id="title">騎士巡遊遊戲</h1>
+    <div id="rules" style="max-width:500px;margin:0 auto 18px auto;text-align:left;background:#fffbe6;border:1.5px solid #ffe066;padding:18px 22px 12px 22px;border-radius:12px;font-size:18px;">
+        <b>規則：</b><br>
+        1. 選擇棋盤大小（5x5、6x6、7x7）。<br>
+        2. 點擊任一格作為起點。<br>
+        3. 只能用西洋棋「騎士」的走法（L型，「日」字）移動。<br>
+        4. 每格只能走一次，目標是走遍所有格子。<br>
+        <br>
+        <b>自動模式</b>：會自動示範如何走完一圈。
+    </div>
+    <div id="sizeBtns">
+        <button class="sizeBtn" data-size="5">5x5</button>
+        <button class="sizeBtn" data-size="6">6x6</button>
+        <button class="sizeBtn" data-size="7">7x7</button>
+    </div>
+    <div id="game" style="display:none"></div>
+    <button id="resetBtn" style="display:none">重新開始</button>
+    <button id="undoBtn" style="display:none">上一步</button>
+    <button id="autoBtn" style="display:none">自動模式</button>
+    <div id="msg"></div>
+    <script src="index.js"></script>
+</body>
+</html>

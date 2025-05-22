@@ -1,0 +1,209 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+table {
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+table {
+  border: 3px solid #222;
+  background: #222;
+}
+td {
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid #444;
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background: #f8f8f8;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 0;
+  box-shadow: none;
+  font-weight: bold;
+  user-select: none;
+  position: relative;
+}
+td.visited {
+  background: #b6eab6;
+  color: #222;
+}
+td.start {
+  background: #7fd0e8;
+  color: #222;
+}
+td.next {
+  background: #ffe066;
+  color: #b8860b;
+}
+td span {
+  font-size: 13px;
+  color: #b8860b;
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-weight: normal;
+  left: unset;
+  top: unset;
+  transform: none;
+}
+.knight {
+  display: inline-block;
+  font-size: 28px;
+  color: #222;
+  background: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border: 2px solid #222;
+  font-weight: bold;
+}
+.start .knight {
+  background: #fff;
+  color: #222;
+  border: 2px solid #222;
+}
+.visited .knight {
+  background: #fff;
+  color: #222;
+  border: 2px solid #222;
+}
+.next-count {
+  font-size: 13px;
+  color: #b8860b;
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-weight: normal;
+}
+
+#resetBtn,
+.sizeBtn,
+#autoBtn,
+#undoBtn {
+  margin: 10px 4px 10px 4px;
+  padding: 8px 20px;
+  font-size: 16px;
+  border: 2px solid #444;
+  background: #fff;
+  color: #222;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.18s, color 0.18s, border 0.18s;
+  outline: none;
+  box-shadow: none;
+}
+.sizeBtn.selected,
+#autoBtn.selected,
+#undoBtn.selected {
+  background: #ffe066;
+  color: #b8860b;
+  border: 2px solid #b8860b;
+}
+#resetBtn:hover,
+.sizeBtn:hover,
+#autoBtn:hover,
+#undoBtn:hover {
+  background: #f0f0f0;
+  color: #111;
+  border: 2px solid #222;
+}
+#msg {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #d2691e;
+}
+
+/* Responsive Web Design */
+@media (max-width: 900px) { /* Tablet */
+  td {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  .knight {
+    font-size: 24px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+  }
+  td span, .next-count {
+    font-size: 11px;
+  }
+  #resetBtn, .sizeBtn, #autoBtn, #undoBtn {
+    padding: 7px 18px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) { /* Mobile */
+  table {
+    margin: 10px auto;
+  }
+  td {
+    width: 32px; /* Smaller cells for mobile */
+    height: 32px;
+    font-size: 14px; /* Smaller font for knight */
+  }
+  .knight {
+    font-size: 18px; /* Smaller knight icon */
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    border-width: 1.5px;
+  }
+  td span, .next-count {
+    font-size: 9px; /* Smaller next move count */
+    bottom: 1px;
+    right: 2px;
+  }
+  #resetBtn, .sizeBtn, #autoBtn, #undoBtn {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin: 8px 3px;
+  }
+  #controls button, #sizeBtns button { /* Ensure buttons can wrap */
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  #msg {
+    font-size: 16px;
+  }
+  #rules {
+    padding: 0 10px; /* Add some padding for rules text on small screens */
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 400px) { /* Very small mobile screens */
+  td {
+    width: 28px;
+    height: 28px;
+  }
+  .knight {
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+   td span, .next-count {
+    font-size: 8px;
+  }
+  #resetBtn, .sizeBtn, #autoBtn, #undoBtn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
