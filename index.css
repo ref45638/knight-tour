@@ -124,8 +124,25 @@ td span {
   color: #d2691e;
 }
 
+/* 自動模式按鈕的速度級別樣式 */
+#autoBtn.speed-1 {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#autoBtn.speed-2 {
+  background-color: #ff9800;
+  color: white;
+}
+
+#autoBtn.speed-3 {
+  background-color: #f44336;
+  color: white;
+}
+
 /* Responsive Web Design */
-@media (max-width: 900px) { /* Tablet */
+@media (max-width: 900px) {
+  /* Tablet */
   td {
     width: 40px;
     height: 40px;
@@ -137,16 +154,21 @@ td span {
     height: 28px;
     line-height: 28px;
   }
-  td span, .next-count {
+  td span,
+  .next-count {
     font-size: 11px;
   }
-  #resetBtn, .sizeBtn, #autoBtn, #undoBtn {
+  #resetBtn,
+  .sizeBtn,
+  #autoBtn,
+  #undoBtn {
     padding: 7px 18px;
     font-size: 15px;
   }
 }
 
-@media (max-width: 600px) { /* Mobile */
+@media (max-width: 600px) {
+  /* Mobile */
   table {
     margin: 10px auto;
   }
@@ -162,17 +184,23 @@ td span {
     line-height: 22px;
     border-width: 1.5px;
   }
-  td span, .next-count {
+  td span,
+  .next-count {
     font-size: 9px; /* Smaller next move count */
     bottom: 1px;
     right: 2px;
   }
-  #resetBtn, .sizeBtn, #autoBtn, #undoBtn {
+  #resetBtn,
+  .sizeBtn,
+  #autoBtn,
+  #undoBtn {
     padding: 6px 12px;
     font-size: 13px;
     margin: 8px 3px;
   }
-  #controls button, #sizeBtns button { /* Ensure buttons can wrap */
+  #controls button,
+  #sizeBtns button {
+    /* Ensure buttons can wrap */
     display: inline-block;
     margin-bottom: 5px;
   }
@@ -188,7 +216,8 @@ td span {
   }
 }
 
-@media (max-width: 400px) { /* Very small mobile screens */
+@media (max-width: 400px) {
+  /* Very small mobile screens */
   td {
     width: 28px;
     height: 28px;
@@ -199,10 +228,14 @@ td span {
     height: 20px;
     line-height: 20px;
   }
-   td span, .next-count {
+  td span,
+  .next-count {
     font-size: 8px;
   }
-  #resetBtn, .sizeBtn, #autoBtn, #undoBtn {
+  #resetBtn,
+  .sizeBtn,
+  #autoBtn,
+  #undoBtn {
     padding: 5px 10px;
     font-size: 12px;
   }
