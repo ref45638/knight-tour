@@ -118,7 +118,7 @@ function checkSolvable(currentX, currentY, numVisited, visitedBoardState) {
 
   // If there are no moves from currentX, currentY, and we haven't visited all squares, it's a dead end.
   if (orderedMoves.length === 0 && numVisited < SIZE * SIZE) {
-      return { solvable: false };
+    return { solvable: false };
   }
 
   for (let move of orderedMoves) {
@@ -137,7 +137,8 @@ function checkSolvable(currentX, currentY, numVisited, visitedBoardState) {
 
 function autoStep() {
   if (!autoMode || !started) {
-    if (autoMode) { // Ensure cleanup if autoMode was true but started is false or similar edge case
+    if (autoMode) {
+      // Ensure cleanup if autoMode was true but started is false or similar edge case
       autoMode = false;
       if (autoTimer) {
         clearTimeout(autoTimer);
@@ -162,25 +163,33 @@ function autoStep() {
 
   if (activeAutoplayPath && activeAutoplayPath.length > 0) {
     nextMoveTarget = activeAutoplayPath.shift(); // Get and remove next move from predicted path
-    if (activeAutoplayPath.length === 0) { // If path just became empty
-        // activeAutoplayPath = null; // No, let it be an empty array to signify it was used up
+    if (activeAutoplayPath.length === 0) {
+      // If path just became empty
+      // activeAutoplayPath = null; // No, let it be an empty array to signify it was used up
     }
   } else {
     // Predicted path is done or wasn't provided. Use Warnsdorff.
-    if (activeAutoplayPath && activeAutoplayPath.length === 0) { // Path was used up
-      document.getElementById("msg").textContent = "預測路徑已完成，嘗試使用 Warnsdorff 繼續...";
+    if (activeAutoplayPath && activeAutoplayPath.length === 0) {
+      // Path was used up
+      document.getElementById("msg").textContent =
+        "預測路徑已完成，嘗試使用 Warnsdorff 繼續...";
       activeAutoplayPath = null; // Now clear it as we are switching to Warnsdorff
     }
 
-    let tempVisitedForWarnsdorff = visited.map(row => row.slice());
-    let warnsdorffMoves = warnsdorff(currentX, currentY, tempVisitedForWarnsdorff);
+    let tempVisitedForWarnsdorff = visited.map((row) => row.slice());
+    let warnsdorffMoves = warnsdorff(
+      currentX,
+      currentY,
+      tempVisitedForWarnsdorff
+    );
 
-    if (warnsdorffMoves.length === 0) {      gameOver = true;
+    if (warnsdorffMoves.length === 0) {
+      gameOver = true;
       autoMode = false;
       if (autoTimer) clearTimeout(autoTimer);
       autoTimer = null;
       activeAutoplayPath = null;
-      
+
       // 重置按鈕樣式
       const autoBtn = document.getElementById("autoBtn");
       autoBtn.classList.remove(`speed-${autoSpeedLevel}`);
@@ -188,14 +197,22 @@ function autoStep() {
       autoSpeedLevel = 1;
 
       if (path.length === SIZE * SIZE) {
-        document.getElementById("msg").textContent = "恭喜！自動模式完成了騎士巡遊！";
+        document.getElementById("msg").textContent =
+          "恭喜！自動模式完成了騎士巡遊！";
       } else {
-        document.getElementById("msg").textContent = "自動模式：從目前位置已無下一步可走 (Warnsdorff)。";
+        document.getElementById("msg").textContent =
+          "自動模式：從目前位置已無下一步可走 (Warnsdorff)。";
         console.log("--- Debug: autoStep FAILED (Warnsdorff) ---");
         console.log("Current path:", JSON.parse(JSON.stringify(path)));
-        console.log("Board state (visited):", JSON.parse(JSON.stringify(visited)));
+        console.log(
+          "Board state (visited):",
+          JSON.parse(JSON.stringify(visited))
+        );
         console.log("Last position:", currentX, currentY);
-        console.log("Calculated moves from warnsdorff (empty):", JSON.parse(JSON.stringify(warnsdorffMoves)));
+        console.log(
+          "Calculated moves from warnsdorff (empty):",
+          JSON.parse(JSON.stringify(warnsdorffMoves))
+        );
         console.log("--------------------------------------");
       }
       render();
@@ -209,13 +226,13 @@ function autoStep() {
     gameOver = true;
     autoMode = false;
     activeAutoplayPath = null;
-    
+
     // 重置按鈕樣式
     const autoBtn = document.getElementById("autoBtn");
     autoBtn.classList.remove(`speed-${autoSpeedLevel}`);
     autoBtn.textContent = "自動模式";
     autoSpeedLevel = 1;
-    
+
     if (autoTimer) clearTimeout(autoTimer);
     autoTimer = null;
     render();
@@ -225,24 +242,38 @@ function autoStep() {
   let [nx, ny] = nextMoveTarget;
 
   if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE || visited[nx][ny]) {
-    console.error(`autoStep: Attempting to move to an invalid or already visited square (${nx},${ny}).`);
-    document.getElementById("msg").textContent = "自動模式錯誤：目標無效或已訪問。";
+    console.error(
+      `autoStep: Attempting to move to an invalid or already visited square (${nx},${ny}).`
+    );
+    document.getElementById("msg").textContent =
+      "自動模式錯誤：目標無效或已訪問。";
     console.log("--- Debug: autoStep INVALID TARGET ---");
     console.log("Path:", JSON.parse(JSON.stringify(path)));
     console.log("Visited:", JSON.parse(JSON.stringify(visited)));
     console.log("Attempted move:", nx, ny);
-    console.log("Source of move:", (activeAutoplayPath !== null) ? "Predicted Path (or exhausted)" : "Warnsdorff");
-    console.log("Remaining activeAutoplayPath content:", activeAutoplayPath ? JSON.parse(JSON.stringify(activeAutoplayPath)) : "null");
-    console.log("-----------------------------------");    gameOver = true;
+    console.log(
+      "Source of move:",
+      activeAutoplayPath !== null
+        ? "Predicted Path (or exhausted)"
+        : "Warnsdorff"
+    );
+    console.log(
+      "Remaining activeAutoplayPath content:",
+      activeAutoplayPath
+        ? JSON.parse(JSON.stringify(activeAutoplayPath))
+        : "null"
+    );
+    console.log("-----------------------------------");
+    gameOver = true;
     autoMode = false;
     activeAutoplayPath = null;
-    
+
     // 重置按鈕樣式
     const autoBtn = document.getElementById("autoBtn");
     autoBtn.classList.remove(`speed-${autoSpeedLevel}`);
     autoBtn.textContent = "自動模式";
     autoSpeedLevel = 1;
-    
+
     if (autoTimer) clearTimeout(autoTimer);
     autoTimer = null;
     render();
@@ -253,13 +284,14 @@ function autoStep() {
   path.push([nx, ny]);
   render();
   if (path.length === SIZE * SIZE) {
-    document.getElementById("msg").textContent = "恭喜！自動模式完成了騎士巡遊！";
+    document.getElementById("msg").textContent =
+      "恭喜！自動模式完成了騎士巡遊！";
     gameOver = true;
     autoMode = false;
     if (autoTimer) clearTimeout(autoTimer);
     autoTimer = null;
     activeAutoplayPath = null;
-    
+
     // 重置按鈕樣式
     const autoBtn = document.getElementById("autoBtn");
     autoBtn.classList.remove(`speed-${autoSpeedLevel}`);
@@ -273,7 +305,7 @@ function autoStep() {
   } else {
     if (autoTimer) clearTimeout(autoTimer);
     autoTimer = null;
-    activeAutoplayPath = null; 
+    activeAutoplayPath = null;
   }
 }
 
@@ -287,21 +319,22 @@ function startNewRandomAutoPlay() {
   started = true;
   visited[i][j] = true;
   path.push([i, j]);
-  render();  autoMode = true;
+  render();
+  autoMode = true;
   autoSpeedLevel = 1; // 確保從正常速度開始
-  
+
   // 更新按鈕樣式
   const autoBtn = document.getElementById("autoBtn");
   autoBtn.classList.add(`speed-${autoSpeedLevel}`);
   autoBtn.textContent = "自動模式 (正常速)";
-  
+
   document.getElementById("msg").textContent = "自動模式啟動（隨機起點）...";
   autoStep(); // Will use Warnsdorff as activeAutoplayPath is null
 }
 
 document.getElementById("autoBtn").onclick = function () {
   const autoBtn = document.getElementById("autoBtn");
-  
+
   if (autoMode) {
     // If auto mode is already running, toggle speed or stop it
     if (autoSpeedLevel < 3) {
@@ -310,12 +343,12 @@ document.getElementById("autoBtn").onclick = function () {
       // 更新當前速度顯示消息
       let speedText = autoSpeedLevel === 2 ? "兩倍速" : "三倍速";
       document.getElementById("msg").textContent = `自動模式: ${speedText}`;
-      
+
       // 更新按鈕樣式
-      autoBtn.classList.remove(`speed-${autoSpeedLevel-1}`);
+      autoBtn.classList.remove(`speed-${autoSpeedLevel - 1}`);
       autoBtn.classList.add(`speed-${autoSpeedLevel}`);
       autoBtn.textContent = `自動模式 (${speedText})`;
-      
+
       // 如果有運行中的定時器，重設以應用新速度
       if (autoTimer) {
         clearTimeout(autoTimer);
@@ -332,10 +365,11 @@ document.getElementById("autoBtn").onclick = function () {
       // 恢復按鈕原始狀態
       autoBtn.classList.remove(`speed-${autoSpeedLevel}`);
       autoBtn.textContent = "自動模式";
-      
+
       autoSpeedLevel = 1; // 重置速度級別為正常
       activeAutoplayPath = null; // Clear path on manual stop
-      document.getElementById("msg").textContent = "自動模式已手動停止。玩家可以繼續遊戲。";
+      document.getElementById("msg").textContent =
+        "自動模式已手動停止。玩家可以繼續遊戲。";
       render();
       return;
     }
@@ -348,53 +382,87 @@ document.getElementById("autoBtn").onclick = function () {
     let currentPathLength = path.length;
 
     let wasGameOver = gameOver;
-    if (gameOver) gameOver = false; 
+    if (gameOver) gameOver = false;
 
-    document.getElementById("msg").textContent = "正在檢查是否有解...";
+    // 動態提示：只顯示秒數，不顯示點點，避免晃動
+    let msgEl = document.getElementById("msg");
+    let seconds = 0;
+    let checkingMsgActive = true;
+    function animateCheckingSec() {
+      if (!checkingMsgActive) return;
+      seconds++;
+      msgEl.textContent = `正在檢查是否有解（${seconds}s）`;
+      setTimeout(animateCheckingSec, 1000);
+    }
+    checkingMsgActive = true;
+    msgEl.textContent = `正在檢查是否有解（0s）`;
+    animateCheckingSec();
     activeAutoplayPath = null; // Clear any previous path
 
-    setTimeout(() => {
-      let solveResult = checkSolvable(
-          currentX,
-          currentY,
-          currentPathLength,
-          visitedStateForSolver
+    // 使用 Web Worker 執行 checkSolvable
+    const worker = new Worker('solver.worker.js');
+    worker.postMessage({
+      x: currentX,
+      y: currentY,
+      numVisited: currentPathLength,
+      visited: visitedStateForSolver,
+      size: SIZE
+    });
+    worker.onmessage = function(e) {
+      checkingMsgActive = false;
+      let solveResult = e.data;
+      worker.terminate();
+      if (solveResult.solvable && solveResult.pathFromHere) {
+        console.clear();
+        console.log("--- Debug: checkSolvable (Web Worker) ---");
+        console.log(
+          "Current game path before autoStep:",
+          JSON.parse(JSON.stringify(path))
+        );
+        console.log(
+          "checkSolvable predicted continuation (starts with current pos):",
+          JSON.parse(JSON.stringify(solveResult.pathFromHere))
         );
 
-      if (solveResult.solvable && solveResult.pathFromHere) {
-        console.clear(); 
-        console.log("--- Debug: checkSolvable ---");
-        console.log("Current game path before autoStep:", JSON.parse(JSON.stringify(path)));
-        console.log("checkSolvable predicted continuation (starts with current pos):", JSON.parse(JSON.stringify(solveResult.pathFromHere)));
-        
         activeAutoplayPath = solveResult.pathFromHere.slice(1); // Path of moves TO MAKE
-        console.log("Path to be followed by autoStep (activeAutoplayPath):", JSON.parse(JSON.stringify(activeAutoplayPath)));
-        
-        let fullPredictedPath = path.slice(0, path.length -1).concat(solveResult.pathFromHere);
-        console.log("Full predicted path by checkSolvable:", JSON.parse(JSON.stringify(fullPredictedPath)));
-        console.log("-----------------------------");        gameOver = false; 
+        console.log(
+          "Path to be followed by autoStep (activeAutoplayPath):",
+          JSON.parse(JSON.stringify(activeAutoplayPath))
+        );
+
+        let fullPredictedPath = path
+          .slice(0, path.length - 1)
+          .concat(solveResult.pathFromHere);
+        console.log(
+          "Full predicted path by checkSolvable:",
+          JSON.parse(JSON.stringify(fullPredictedPath))
+        );
+        console.log("-----------------------------");
+        gameOver = false;
         autoMode = true;
         autoSpeedLevel = 1; // 每次開始時重置為正常速度
         started = true;
-        
+
         // 更新按鈕樣式
         const autoBtn = document.getElementById("autoBtn");
         autoBtn.classList.add(`speed-${autoSpeedLevel}`);
         autoBtn.textContent = "自動模式 (正常速)";
-        
-        document.getElementById("msg").textContent = "從目前位置繼續自動遊玩（使用預測路徑）...";
+
+        document.getElementById("msg").textContent =
+          "從目前位置繼續自動遊玩（使用預測路徑）...";
         autoStep();
       } else {
-        gameOver = wasGameOver; 
-        document.getElementById("msg").textContent = "自動模式：從目前位置無法完成騎士巡遊。";
-        autoMode = false; 
+        gameOver = wasGameOver;
+        document.getElementById("msg").textContent =
+          "自動模式：從目前位置無法完成騎士巡遊。";
+        autoMode = false;
         activeAutoplayPath = null; // Ensure cleared
         render();
       }
-    }, 10);
+    };
   } else {
     // New game, no moves made yet
-    console.clear(); 
+    console.clear();
     console.log("--- Debug: startNewRandomAutoPlay (via button) ---");
     console.log("No existing path, starting new random auto play.");
     console.log("checkSolvable will not be called beforehand in this case.");
@@ -419,7 +487,7 @@ function createBoard(newSize) {
       clearTimeout(autoTimer);
       autoTimer = null;
     }
-    
+
     // 重置按鈕樣式
     const autoBtn = document.getElementById("autoBtn");
     autoBtn.classList.remove(`speed-${autoSpeedLevel}`);
